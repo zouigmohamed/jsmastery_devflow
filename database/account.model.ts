@@ -16,7 +16,8 @@ const AccountSchema = new Schema<IAccount>(
     image: { type: String },
     password: { type: String },
     provider: { type: String, required: true },
-    providerAccountId: { type: String, required: true },
+        providerAccountId: { type: String, required: true },
+    
   },
   { timestamps: true }
 );

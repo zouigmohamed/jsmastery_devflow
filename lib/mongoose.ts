@@ -22,7 +22,8 @@ const dbConnect = async () :Promise<Mongoose> => {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(MONGO_URL, {
-        dbName: "devflow",
+          dbName: "devflow",
+          
       })
       .then((result) => {
         console.log("connected to MongoDb");
