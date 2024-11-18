@@ -5,6 +5,7 @@ import HomeFilter from "@/components/filter/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import handleError from "@/lib/handlers/error";
 
 const questions = [
   {
@@ -46,6 +47,7 @@ const questions = [
     createdAt: new Date("2021-09-01"),
   },
 ];
+
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
