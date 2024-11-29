@@ -7,9 +7,8 @@ import React from "react";
 import { SheetClose } from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants/index";
 import { cn } from "@/lib/utils";
-function NavLinks({ isMobileNav = false }: { isMobileNav?: boolean }) {
+function NavLinks({ isMobileNav = false , userId}: { isMobileNav?: boolean, userId?:string }) {
   const pathname = usePathname();
-  const userId = 1;
 
   return (
     <>
