@@ -2,16 +2,17 @@ interface Tag {
     _id: string;
     name: string;
   }
-  
+
   interface Author {
     _id: string;
     name: string;
     image: string;
   }
-  
+
   interface Question {
     _id: string;
     title: string;
+    content: string;
     tags: Tag[];
     author: Author;
     createdAt: Date;
@@ -20,7 +21,7 @@ interface Tag {
     views: number;
     createdAt: Date;
 }
-  
+
 type ActionResponse<T = null> = {
   success: boolean;
   data?: T;

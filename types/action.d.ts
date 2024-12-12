@@ -23,3 +23,10 @@ interface RouteParams {
   params: Promise<Record<string, string>>;
   search: Promise<Record<string, string>>;
 }
+interface EditQuestionParams extends CreateQuestionParams {
+  questionId: string;
+}
+
+interface GetQuestionParams {
+  questionId: string;
+}
