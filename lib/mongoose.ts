@@ -1,6 +1,7 @@
 import mongoose, { Mongoose } from "mongoose";
 
 import logger from "./logger";
+import "@/database"
 const MONGO_URL = process.env.MONGODB_URL as string;
 if (!MONGO_URL) {
   throw new Error("mongoDb url is not defined ");

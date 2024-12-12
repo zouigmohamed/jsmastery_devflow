@@ -19,10 +19,7 @@ interface CreateQuestionParams {
   content: string;
   tags: string[];
 }
-interface RouteParams {
-  params: Promise<Record<string, string>>;
-  search: Promise<Record<string, string>>;
-}
+
 interface EditQuestionParams extends CreateQuestionParams {
   questionId: string;
 }
