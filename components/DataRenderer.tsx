@@ -76,27 +76,6 @@ const StateSkeleton = ({
   </div>
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const DataRenderer = <T,>({
   success,
   error,
