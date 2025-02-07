@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import React from "react";
+
 import TagCard from "@/components/cards/TagCard";
 import { Preview } from "@/components/editor/Preview";
 import AnswerForm from "@/components/forms/AnswerForm";
@@ -6,19 +10,12 @@ import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { title } from "process";
-import React from "react";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
   await incrementViews({ questionId: id });
-
   const { success, data: question } = await getQuestion({ questionId: id });
-
   if (!success || !question) return redirect("/404");
-
   const { author, createdAt, answers, views, tags, content, title } = question;
 
   return (
@@ -85,8 +82,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           />
         ))}
       </div>
+
       <section className="my-5">
-        <AnswerForm />
+        <AnswerForm questionId={question._id} />
       </section>
     </>
   );
