@@ -10,12 +10,25 @@ import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
+import { getAnswers } from "@/lib/actions/answer.action";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
   await incrementViews({ questionId: id });
   const { success, data: question } = await getQuestion({ questionId: id });
   if (!success || !question) return redirect("/404");
+    const {
+      success: areAnswersLoaded,
+      data: answersResult,
+      error: answersError,
+    } = await getAnswers({
+      questionId: id,
+      page: 1,
+      pageSize: 10,
+      filter: "latest",
+    });
+      console.log("ANSWERS", answersResult);
+
   const { author, createdAt, answers, views, tags, content, title } = question;
 
   return (
