@@ -1,4 +1,3 @@
-
 import ROUTES from "./routes";
 
 export const DEFAULT_EMPTY = {
@@ -47,4 +46,9 @@ export const EMPTY_COLLECTIONS = {
     text: "Save to Collection",
     href: ROUTES.COLLECTION,
   },
+};
+export const EMPTY_ANSWERS = {
+  title: "No Answers Found",
+  message:
+    "The answer board is empty. Make it rain with your brilliant answer.",
 };
