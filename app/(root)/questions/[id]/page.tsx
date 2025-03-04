@@ -14,22 +14,23 @@ import { getAnswers } from "@/lib/actions/answer.action";
 import AllAnswers from "@/components/answers/AllAnswers";
 import Votes from "@/components/votes/Votes";
 import { hasVoted } from "@/lib/actions/vote.action";
+import SaveQuestion from "@/components/questions/SaveQuestion";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
   await incrementViews({ questionId: id });
   const { success, data: question } = await getQuestion({ questionId: id });
   if (!success || !question) return redirect("/404");
-    const {
-      success: areAnswersLoaded,
-      data: answersResult,
-      error: answersError,
-    } = await getAnswers({
-      questionId: id,
-      page: 1,
-      pageSize: 10,
-      filter: "latest",
-    });
+  const {
+    success: areAnswersLoaded,
+    data: answersResult,
+    error: answersError,
+  } = await getAnswers({
+    questionId: id,
+    page: 1,
+    pageSize: 10,
+    filter: "latest",
+  });
   const hasVotedPromise = hasVoted({
     targetId: question._id,
     targetType: "question",
@@ -63,6 +64,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
                 targetId={question._id}
                 hasVotedPromise={hasVotedPromise}
               />
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <SaveQuestion questionId={question._id} />
             </Suspense>
           </div>
         </div>
