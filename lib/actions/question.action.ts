@@ -253,17 +253,17 @@ export async function getQuestions(
     case "newest":
       sortCriteria = { createdAt: -1 };
       break;
-    case "unanswered":
-      filterQuery.answers = 0;
+      case "unanswered":
+        filterQuery.answers = 0;
+        sortCriteria = { createdAt: -1 };
+        break;
+        case "popular":
+          sortCriteria = { upvotes: -1 };
+      break;
+      default:
       sortCriteria = { createdAt: -1 };
       break;
-    case "popular":
-      sortCriteria = { upvotes: -1 };
-      break;
-    default:
-      sortCriteria = { createdAt: -1 };
-      break;
-  }
+    }
 
   try {
     const totalQuestions = await Question.countDocuments(filterQuery);
