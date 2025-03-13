@@ -15,7 +15,7 @@ import {
   IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validation";
-
+import dbConnect from "../mongoose";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -253,17 +253,17 @@ export async function getQuestions(
     case "newest":
       sortCriteria = { createdAt: -1 };
       break;
-      case "unanswered":
-        filterQuery.answers = 0;
-        sortCriteria = { createdAt: -1 };
-        break;
-        case "popular":
-          sortCriteria = { upvotes: -1 };
-      break;
-      default:
+    case "unanswered":
+      filterQuery.answers = 0;
       sortCriteria = { createdAt: -1 };
       break;
-    }
+    case "popular":
+      sortCriteria = { upvotes: -1 };
+      break;
+    default:
+      sortCriteria = { createdAt: -1 };
+      break;
+  }
 
   try {
     const totalQuestions = await Question.countDocuments(filterQuery);
@@ -311,10 +311,25 @@ export async function incrementViews(
 
     await question.save();
 
-
     return {
       success: true,
       data: { views: question.views },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+export async function getHotQuestions(): Promise<ActionResponse<Question[]>> {
+  try {
+    await dbConnect();
+
+    const questions = await Question.find()
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(questions)),
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;

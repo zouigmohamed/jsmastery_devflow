@@ -16,10 +16,11 @@ import Votes from "@/components/votes/Votes";
 import { hasVoted } from "@/lib/actions/vote.action";
 import SaveQuestion from "@/components/questions/SaveQuestion";
 import { hasSavedQuestion } from "@/lib/actions/collection.action";
+import Pagination from "@/components/Pagination";
 
-const QuestionDetails = async ({ params,searchParams }: RouteParams) => {
+const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
-  const {page , pageSize , filter} =  await searchParams;
+  const { page, pageSize, filter } = await searchParams;
   await incrementViews({ questionId: id });
   const { success, data: question } = await getQuestion({ questionId: id });
   if (!success || !question) return redirect("/404");
@@ -122,6 +123,8 @@ const QuestionDetails = async ({ params,searchParams }: RouteParams) => {
       </div>
       <section className="my-5">
         <AllAnswers
+          page={Number(page) || 1}
+          isNext={answersResult?.isNext || false}
           data={answersResult?.answers}
           success={areAnswersLoaded}
           error={answersError}
