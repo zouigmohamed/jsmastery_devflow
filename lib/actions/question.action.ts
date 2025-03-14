@@ -280,7 +280,7 @@ export async function getQuestions(
 
     return {
       success: true,
-      data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
+      data: { questions: [], isNext },
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;
