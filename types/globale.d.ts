@@ -92,3 +92,7 @@ interface BadgeCounts {
   SILVER: number;
   BRONZE: number;
 }
+interface GetUserQuestionsParams
+  extends Omit<PaginatedSearchParams, "query" | "filter" | "sort"> {
+  userId: string;
+}
