@@ -61,3 +61,6 @@ interface CollectionBaseParams {
 interface GetUserParams {
   userId : string
 }
+interface GetUserAnswersParams extends PaginatedSearchParams {
+  userId: string;
+}
