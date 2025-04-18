@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/hooks/use-toast";
+import { deleteQuestion } from "@/lib/actions/question.action";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -29,12 +30,13 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
 
   const handleDelete = async () => {
     if (type === "Question") {
-      // Call API to delete question
+     await deleteQuestion({ questionId: itemId });
 
-      toast({
-        title: "Question deleted",
-        description: "Your question has been deleted successfully.",
-      });
+     toast({
+       title: "Question Deleted",
+       variant: "destructive",
+       description: "Your question has been successfully deleted.",
+     });
     } else if (type === "Answer") {
       // Call API to delete answer
 

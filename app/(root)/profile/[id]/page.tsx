@@ -136,10 +136,11 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
         totalQuestions={totalQuestions}
         totalAnswers={totalAnswers}
         badges={{
+          BRONZE: 0,
           GOLD: 0,
           SILVER: 0,
-          BRONZE: 0,
         }}
+        reputationPoints={user.reputation || 0}
       />
 
       <section className="mt-10 flex gap-10">

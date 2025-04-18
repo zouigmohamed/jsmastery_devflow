@@ -28,7 +28,7 @@ const AllAnswers = ({
         </h3>
         <CommonFilter
           filters={AnswerFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px]"
+          otherClasses="min-h-[56px] sm:min-w-[170px] "
         />
       </div>
       <DataRenderer
