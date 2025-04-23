@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    after: true, // <-- أضف هذا السطر
+  },
   serverExternalPackages: ["pino", "pino-pretty"],
   images: {
     remotePatterns: [

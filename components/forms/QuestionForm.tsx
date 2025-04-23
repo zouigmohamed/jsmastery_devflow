@@ -30,10 +30,12 @@ import { Input } from "../ui/input";
 const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
 });
+
 interface Params {
   question?: Question;
   isEdit?: boolean;
 }
+
 const QuestionForm = ({ question, isEdit = false }: Params) => {
   const router = useRouter();
   const editorRef = useRef<MDXEditorMethods>(null);
@@ -94,16 +96,17 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
     startTransition(async () => {
       if (isEdit && question) {
         const result = await editQuestion({
-          questionId: question._id,
+          questionId: question?._id,
           ...data,
         });
+
         if (result.success) {
           toast({
             title: "Success",
             description: "Question updated successfully",
           });
 
-          if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+          if (result.data) router.push(ROUTES.QUESTION(result.data._id as string));
         } else {
           toast({
             title: `Error ${result.status}`,
@@ -111,8 +114,10 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
             variant: "destructive",
           });
         }
-        return
+
+        return;
       }
+
       const result = await createQuestion(data);
 
       if (result.success) {
@@ -237,7 +242,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                 <span>Submitting</span>
               </>
             ) : (
-              <>{!isEdit ? "Ask A Question" : "Edit"}</>
+              <>{isEdit ? "Edit" : "Ask a Question"}</>
             )}
           </Button>
         </div>

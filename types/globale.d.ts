@@ -88,12 +88,8 @@ interface User {
   reputation?: number;
   createdAt: Date;
 }
-interface BadgeCounts {
+interface Badges {
   GOLD: number;
   SILVER: number;
   BRONZE: number;
-}
-interface GetUserQuestionsParams
-  extends Omit<PaginatedSearchParams, "query" | "filter" | "sort"> {
-  userId: string;
 }

@@ -13,6 +13,8 @@ import {
 } from "../validation";
 import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/routes";
+import { createInteraction } from "./interaction.action";
+import { unstable_after } from "next/server";
 
 export async function updateVoteCount(
   params: UpdateVoteCountParams,
@@ -72,6 +74,12 @@ export async function createVote(
   session.startTransaction();
 
   try {
+    const Model = targetType === "question" ? Question : Answer;
+
+    const contentDoc = await Model.findById(targetId).session(session);
+    if (!contentDoc) throw new Error("Content not found");
+
+    const contentAuthorId = contentDoc.author.toString();
     const existingVote = await Vote.findOne({
       author: userId,
       actionId: targetId,
@@ -122,7 +130,14 @@ export async function createVote(
         session
       );
     }
-
+    unstable_after(async () => {
+      await createInteraction({
+        action: voteType,
+        actionId: targetId,
+        actionTarget: targetType,
+        authorId: contentAuthorId,
+      });
+    });
     await session.commitTransaction();
     session.endSession();
   revalidatePath(ROUTES.QUESTION(targetId))
