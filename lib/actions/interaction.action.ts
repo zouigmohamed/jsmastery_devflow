@@ -5,7 +5,7 @@ import { IInteractionDoc } from "@/database/interaction.model";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { CreateInteractionSchema } from "../validation";
+import { CreateInteractionSchema } from "../validations";
 
 export async function createInteraction(
   params: CreateInteractionParams

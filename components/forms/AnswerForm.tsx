@@ -21,7 +21,7 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { api } from "@/lib/api";
-import { AnswerSchema } from "@/lib/validation";
+import { AnswerSchema } from "@/lib/validations";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
@@ -84,7 +84,9 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
     }
 
     setIsAISubmitting(true);
- const userAnswer = editorRef.current?.getMarkdown();
+
+    const userAnswer = editorRef.current?.getMarkdown();
+
     try {
       const { success, data, error } = await api.ai.getAnswer(
         questionTitle,

@@ -1,25 +1,35 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 import { SheetClose } from "@/components/ui/sheet";
-import { sidebarLinks } from "@/constants/index";
+import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
-function NavLinks({ isMobileNav = false , userId}: { isMobileNav?: boolean, userId?:string }) {
+
+const NavLinks = ({
+  isMobileNav = false,
+  userId,
+}: {
+  isMobileNav?: boolean;
+  userId?: string;
+}) => {
   const pathname = usePathname();
 
   return (
     <>
       {sidebarLinks.map((item) => {
         const isActive =
-          (pathname.includes(item.label) && item.route.length > 1) ||
+          (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
+
         if (item.route === "/profile") {
           if (userId) item.route = `${item.route}/${userId}`;
           else return null;
         }
+
         const LinkComponent = (
           <Link
             href={item.route}
@@ -48,6 +58,7 @@ function NavLinks({ isMobileNav = false , userId}: { isMobileNav?: boolean, user
             </p>
           </Link>
         );
+
         return isMobileNav ? (
           <SheetClose asChild key={item.route}>
             {LinkComponent}
@@ -58,6 +69,6 @@ function NavLinks({ isMobileNav = false , userId}: { isMobileNav?: boolean, user
       })}
     </>
   );
-}
+};
 
 export default NavLinks;

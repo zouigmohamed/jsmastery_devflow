@@ -1,5 +1,11 @@
-
 import { Schema, models, model, Types, Document } from "mongoose";
+
+export interface IInteraction {
+  user: Types.ObjectId;
+  action: string;
+  actionId: Types.ObjectId;
+  actionType: string;
+}
 
 export const InteractionActionEnums = [
   "view",
@@ -12,14 +18,7 @@ export const InteractionActionEnums = [
   "search",
 ] as const;
 
- export interface IInteraction {
-   user: Types.ObjectId;
-   action: string;
-   actionId: Types.ObjectId;
-   actionType: string;
- }
-
- export interface IInteractionDoc extends IInteraction, Document {}
+export interface IInteractionDoc extends IInteraction, Document {}
 const InteractionSchema = new Schema<IInteraction>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -34,7 +33,7 @@ const InteractionSchema = new Schema<IInteraction>(
   { timestamps: true }
 );
 
- const Interaction =
-   models?.Interaction || model<IInteraction>("Interaction", InteractionSchema);
+const Interaction =
+  models?.Interaction || model<IInteraction>("Interaction", InteractionSchema);
 
- export default Interaction;
+export default Interaction;

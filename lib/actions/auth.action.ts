@@ -10,7 +10,7 @@ import User from "@/database/user.model";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { NotFoundError } from "../http-errors";
-import { SignInSchema, SignUpSchema } from "../validation";
+import { SignInSchema, SignUpSchema } from "../validations";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
@@ -64,7 +64,6 @@ export async function signUpWithCredentials(
 
     return { success: true };
   } catch (error) {
-    console.log(`error : ${error}`);
     await session.abortTransaction();
 
     return handleError(error) as ErrorResponse;

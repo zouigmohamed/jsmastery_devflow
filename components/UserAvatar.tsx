@@ -3,9 +3,9 @@ import Link from "next/link";
 import React from "react";
 
 import ROUTES from "@/constants/routes";
+import { cn } from "@/lib/utils";
 
 import { Avatar, AvatarFallback } from "./ui/avatar";
-import { cn } from "@/lib/utils";
 
 interface Props {
   id: string;
@@ -18,9 +18,9 @@ interface Props {
 const UserAvatar = ({
   id,
   name,
-  fallbackClassName,
   imageUrl,
   className = "h-9 w-9",
+  fallbackClassName,
 }: Props) => {
   const initials = name
     .split(" ")

@@ -1,9 +1,9 @@
+import { AnswerFilters } from "@/constants/filters";
 import { EMPTY_ANSWERS } from "@/constants/states";
 
 import AnswerCard from "../cards/AnswerCard";
 import DataRenderer from "../DataRenderer";
-import CommonFilter from "../filter/CommonFilter";
-import { AnswerFilters } from "@/constants/filters";
+import CommonFilter from "../filters/CommonFilter";
 import Pagination from "../Pagination";
 
 interface Props extends ActionResponse<Answer[]> {
@@ -28,9 +28,11 @@ const AllAnswers = ({
         </h3>
         <CommonFilter
           filters={AnswerFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px] "
+          otherClasses="sm:min-w-32"
+          containerClasses="max-xs:w-full"
         />
       </div>
+
       <DataRenderer
         data={data}
         error={error}
@@ -40,7 +42,8 @@ const AllAnswers = ({
           answers.map((answer) => <AnswerCard key={answer._id} {...answer} />)
         }
       />
-      <Pagination page={page} isNext={isNext || false} />
+
+      <Pagination page={page} isNext={isNext} />
     </div>
   );
 };

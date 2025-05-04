@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,6 +31,7 @@ interface AuthFormProps<T extends FieldValues> {
   onSubmit: (data: T) => Promise<ActionResponse>;
   formType: "SIGN_IN" | "SIGN_UP";
 }
+
 const AuthForm = <T extends FieldValues>({
   schema,
   defaultValues,
@@ -37,36 +39,42 @@ const AuthForm = <T extends FieldValues>({
   onSubmit,
 }: AuthFormProps<T>) => {
   const router = useRouter();
-  // 1. Define your form.
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
+
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    // TODO : authenticate the user
     const result = (await onSubmit(data)) as ActionResponse;
-    if (result.success) {
+
+    if (result?.success) {
       toast({
         title: "Success",
         description:
           formType === "SIGN_IN"
-            ? "You have been successfully Signed In"
-            : "You have been successfully Singed Up",
+            ? "Signed in successfully"
+            : "Signed up successfully",
       });
+
       router.push(ROUTES.HOME);
     } else {
       toast({
         title: `Error ${result?.status}`,
-        description: `${result?.error?.message}`,
+        description: result?.error?.message,
         variant: "destructive",
       });
     }
   };
+
   const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign Up";
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-        {buttonText}
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="mt-10 space-y-6"
+      >
         {Object.keys(defaultValues).map((field) => (
           <FormField
             key={field}
@@ -92,6 +100,7 @@ const AuthForm = <T extends FieldValues>({
             )}
           />
         ))}
+
         <Button
           disabled={form.formState.isSubmitting}
           className="primary-gradient paragraph-medium min-h-12 w-full rounded-2 px-4 py-3 font-inter !text-light-900"
@@ -102,9 +111,10 @@ const AuthForm = <T extends FieldValues>({
               : "Signing Up..."
             : buttonText}
         </Button>
+
         {formType === "SIGN_IN" ? (
           <p>
-            Don&apos;t have an account?
+            Don&apos;t have an account?{" "}
             <Link
               href={ROUTES.SIGN_UP}
               className="paragraph-semibold primary-text-gradient"
@@ -114,7 +124,7 @@ const AuthForm = <T extends FieldValues>({
           </p>
         ) : (
           <p>
-            Already have an account?
+            Already have an account?{" "}
             <Link
               href={ROUTES.SIGN_IN}
               className="paragraph-semibold primary-text-gradient"
@@ -127,4 +137,5 @@ const AuthForm = <T extends FieldValues>({
     </Form>
   );
 };
+
 export default AuthForm;

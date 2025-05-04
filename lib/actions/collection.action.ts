@@ -11,7 +11,7 @@ import handleError from "../handlers/error";
 import {
   CollectionBaseSchema,
   PaginatedSearchParamsSchema,
-} from "../validation";
+} from "../validations";
 
 export async function toggleSaveQuestion(
   params: CollectionBaseParams

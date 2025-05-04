@@ -72,6 +72,7 @@ const TagCard = ({
       </Link>
     );
   }
+
   return (
     <Link href={ROUTES.TAG(_id)} className="shadow-light100_darknone">
       <article className="background-light900_dark200 light-border flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
